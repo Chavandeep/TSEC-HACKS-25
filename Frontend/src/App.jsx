@@ -27,6 +27,7 @@ import PublicRoute from './PublicRoute';
 import ListUsers from './list';
 import UserList from './list';
 import UserProfile from './UserProfile';
+import ChatInterface from './Negotiate';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
@@ -68,6 +69,8 @@ function App() {
           <Route path='/fill' element={<PrivateRoute element={FormFill} />} />
           <Route path="/list" element={<PrivateRoute element= {UserList} />} />
         <Route path="/profile/:id" element={<PrivateRoute element= {UserProfile} />} />
+        <Route path="/negotiate/:farmerId" element={<PrivateRoute element= {ChatInterface} />} />
+    
         </Routes>
       </Router>
     </LanguageProvider>
