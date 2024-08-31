@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage'; // Import storage for file uploads
@@ -32,7 +32,32 @@ function FormFill() {
   const [otherDetails, setOtherDetails] = useState('');
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState(null);
+  const [formFilled, setFormFilled] = useState(false);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const userDoc = await firestore.collection('userDetails').doc(user.uid).get();
+        if (userDoc.exists) {
+          const userData = userDoc.data();
+          setUserType(userData.userType || '');
+          setState(userData.state || '');
+          setCropsSelected(userData.crops || []);
+          setFruitsSelected(userData.fruits || []);
+          setVegetablesSelected(userData.vegetables || []);
+          setOtherDetails(userData.otherDetails || '');
+          setName(userData.name || '');
+          setProfilePic(userData.profilePicUrl || '');
+          setFormFilled(true);
+          navigate('/myprofile'); // Redirect to /myprofile if data exists
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
 
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
@@ -69,7 +94,7 @@ function FormFill() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     let profilePicUrl = '';
     if (profilePic) {
       // Upload profile picture
@@ -91,15 +116,23 @@ function FormFill() {
     };
 
     try {
-      // Add form data to Firestore
-      await firestore.collection('userDetails').add(formData);
-      alert('Form submitted successfully!');
-      navigate('/dashboard');
+      // Add or update form data in Firestore
+      const user = firebase.auth().currentUser;
+      if (user) {
+        await firestore.collection('userDetails').doc(user.uid).set(formData, { merge: true });
+        alert('Form submitted successfully!');
+        navigate('/myprofile'); // Redirect to /myprofile after successful submission
+      }
     } catch (error) {
       console.error("Error submitting form: ", error);
       alert('Failed to submit form.');
     }
   };
+
+  // Redirect to profile if form is already filled
+  if (formFilled) {
+    return <div>Redirecting to your profile...</div>; // This message can be customized or replaced with a loading spinner
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -165,6 +198,7 @@ function FormFill() {
                   <input 
                     type="checkbox" 
                     value={crop} 
+                    checked={cropsSelected.includes(crop)}
                     onChange={handleCropsChange} 
                     className="mr-2" 
                   />
@@ -180,6 +214,7 @@ function FormFill() {
                   <input 
                     type="checkbox" 
                     value={fruit} 
+                    checked={fruitsSelected.includes(fruit)}
                     onChange={handleFruitsChange} 
                     className="mr-2" 
                   />
@@ -195,6 +230,7 @@ function FormFill() {
                   <input 
                     type="checkbox" 
                     value={vegetable} 
+                    checked={vegetablesSelected.includes(vegetable)}
                     onChange={handleVegetablesChange} 
                     className="mr-2" 
                   />
@@ -205,22 +241,21 @@ function FormFill() {
           </>
         )}
 
-        {(userType === 'Retailer' || userType === 'Customer') && (
+        {userType !== 'Farmer' && (
           <label className="block mb-4">
-            <span className="text-gray-700">Additional Details</span>
+            <span className="text-gray-700">Other Details</span>
             <textarea
               value={otherDetails}
               onChange={(e) => setOtherDetails(e.target.value)}
               className="block w-full mt-1 border-gray-300 rounded-md shadow-sm"
               rows="4"
-              placeholder="Enter details here..."
             />
           </label>
         )}
 
         <button 
           type="submit" 
-          className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md shadow-lg hover:bg-indigo-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="block w-full py-2 px-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
         >
           Submit
         </button>

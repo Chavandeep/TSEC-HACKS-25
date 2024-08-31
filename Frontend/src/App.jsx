@@ -3,9 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from 'firebase/compat/app';
-import Home from './pages/Home/Home';
-import About from './About'; // Assuming you have an About page
-import ProductManagement from './ProductManagement';
+import About from './About';
 import ProductDescription from './ProductDesc';
 import { LanguageProvider } from './contexts/LanguageContext';
 import ProductUpload from './Upload';
@@ -18,16 +16,31 @@ import Signup from './SignUp';
 import FarmerDashboard from './FarmerDashboard';
 import RetailerDashboard from './RetailerDashboard';
 import ConsumerDashboard from './ConsumerDashboard';
-import Header from './Header';
 import Translatew from './Translatew';
 import ChalaHai from './Cbot/ChalaHai';
 import FormFill from './FormFill';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import ListUsers from './list';
 import UserList from './list';
 import UserProfile from './UserProfile';
 import ChatInterface from './Negotiate';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './theme';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import ProductDetails from './pages/ProductDetails';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderConfirmation from './pages/OrderConfirmation';
+import { CartProvider } from './contexts/CartContext';
+import ProductManagement from './pages/ProductManagement';
+import Test from './pages/Test';
+import Inventory from './pages/Inventory';
+import Farmer_Connect from './pages/Farmer_Connect';
+import Negotiation from './pages/Negotiation';
+import Notifications from './pages/Notifications';
+import MyProfile from './myProfile';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
@@ -46,6 +59,7 @@ function App() {
 
   return (
     <LanguageProvider>
+      <CartProvider>
       <Router>
         <Header />
         <Routes>
@@ -53,7 +67,7 @@ function App() {
           <Route path='/about' element={<PublicRoute element={About} restricted={false} />} />
           <Route path='/login' element={<PublicRoute element={Login} restricted={true} />} />
           <Route path='/signup' element={<PublicRoute element={Signup} restricted={true} />} />
-          
+
           <Route path='/upload' element={<PrivateRoute element={ProductUpload} />} />
           <Route path='/management' element={<PrivateRoute element={ProductManagement} />} />
           <Route path='/desc' element={<PrivateRoute element={ProductDescription} />} />
@@ -67,12 +81,26 @@ function App() {
           <Route path='/trans' element={<PrivateRoute element={Translatew} />} />
           <Route path='/cha' element={<PrivateRoute element={ChalaHai} />} />
           <Route path='/fill' element={<PrivateRoute element={FormFill} />} />
-          <Route path="/list" element={<PrivateRoute element= {UserList} />} />
-        <Route path="/profile/:id" element={<PrivateRoute element= {UserProfile} />} />
-        <Route path="/negotiate/:farmerId" element={<PrivateRoute element= {ChatInterface} />} />
-    
+          <Route path="/list" element={<PrivateRoute element={UserList} />} />
+          <Route path="/profile/:id" element={<PrivateRoute element={UserProfile} />} />
+          <Route path="/negotiate/:farmerId" element={<PrivateRoute element={ChatInterface} />} />
+          <Route path="/product/:id" element={<PrivateRoute element={ProductDetails} />} />
+          <Route path="/cart" element={<PrivateRoute element={CartPage} />} />
+          <Route path="/checkout" element={<PrivateRoute element={CheckoutPage} />} />
+          <Route path="/order-confirmation" element={<PrivateRoute element={OrderConfirmation} />} />
+          <Route path="/upload" element={<PrivateRoute element={ProductUpload} />} />
+          <Route path="/posting" element={<PrivateRoute element={Test} />} />
+          <Route path="/inventory" element={<PrivateRoute element={Inventory} />} />
+          <Route path="/con" element={<PrivateRoute element={Farmer_Connect} />} />
+          <Route path="/nego" element={<PrivateRoute element={Negotiation} />} />
+          <Route path="/noti" element={<PrivateRoute element={Notifications} />} />
+          <Route path="/myprofile" element={<PrivateRoute element={MyProfile} />} />
+
+
         </Routes>
+        <Footer/>
       </Router>
+        </CartProvider>
     </LanguageProvider>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import UserCard from './UserCard';
+import UserCard from './UserCard'; // Ensure UserCard is correctly imported
 
 const firestore = firebase.firestore();
 
@@ -24,7 +24,7 @@ function UserList() {
   }, []);
 
   // Filter users based on selected filter type
-  const filteredUsers = users.filter(user => 
+  const filteredUsers = users.filter(user =>
     filter === '' || user.userType === filter
   );
 
@@ -47,6 +47,7 @@ function UserList() {
         </select>
       </div>
 
+      {/* Display user cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredUsers.length > 0 ? (
           filteredUsers.map(user => (
