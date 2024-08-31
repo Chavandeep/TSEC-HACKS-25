@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Container, Grid, Card, CardContent, CardMedia, Typography, TextField, Button, Select, MenuItem } from '@mui/material';
 import { collection, getDocs, query, where, doc, setDoc, Timestamp, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../Firebase/firebaseConfig'; 
+import Notifications from '../components/Notifications';
 
 const FarmerConnect = () => {
   const [farmers, setFarmers] = useState([]);
@@ -105,14 +106,14 @@ const FarmerConnect = () => {
           size="small"
           value={searchProduce}
           onChange={(e) => setSearchProduce(e.target.value)}
-        />
+          />
         <Select
           label="Location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           size="small"
           sx={{ minWidth: '100px' }}
-        >
+          >
           <MenuItem value="All Locations">All Locations</MenuItem>
           <MenuItem value="north">North</MenuItem>
           <MenuItem value="south">South</MenuItem>
@@ -124,7 +125,7 @@ const FarmerConnect = () => {
           value={produceType}
           onChange={(e) => setProduceType(e.target.value)}
           size="small"
-        >
+          >
           <MenuItem value="All Types">All Types</MenuItem>
           <MenuItem value="fruits">Fruits</MenuItem>
           <MenuItem value="vegetables">Vegetables</MenuItem>
@@ -145,7 +146,7 @@ const FarmerConnect = () => {
                 height="140"
                 image={farmer.profilePicUrl || 'https://via.placeholder.com/300x140'} // Use farmer's profile picture or a placeholder
                 alt={farmer.name || 'Farmer’s produce'}
-              />
+                />
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   {farmer.name}
@@ -163,7 +164,7 @@ const FarmerConnect = () => {
                   color={connectionStatus[farmer.id] === 'pending' ? 'warning' : 'success'}
                   fullWidth
                   onClick={() => handleConnect(farmer.id)}
-                >
+                  >
                   {connectionStatus[farmer.id] === 'pending' ? 'Request Sent' : 'Connect'}
                 </Button>
               </CardContent>
@@ -171,6 +172,7 @@ const FarmerConnect = () => {
           </Grid>
         ))}
       </Grid>
+<Notifications/>
     </Container>
   );
 };

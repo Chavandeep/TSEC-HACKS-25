@@ -1,162 +1,196 @@
-import React from "react";
-import { Link } from "react-scroll";
+import React from 'react';
+import { 
+  Box, 
+  Container, 
+  Grid, 
+  Typography, 
+  TextField, 
+  Button, 
+  IconButton, 
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  LinkedIn,
+  LocalFlorist,
+  Phone,
+  Email,
+  LocationOn
+} from '@mui/icons-material';
+
+const FooterRoot = styled('footer')(({ theme }) => ({
+  backgroundColor: theme.palette.success.dark,
+  color: theme.palette.common.white,
+  padding: theme.spacing(6, 0),
+}));
+
+const FooterLink = styled(Typography)(({ theme }) => ({
+  color: theme.palette.common.white,
+  '&:hover': {
+    color: theme.palette.success.light,
+    cursor: 'pointer',
+  },
+}));
+
+const SocialButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.common.white,
+  '&:hover': {
+    backgroundColor: theme.palette.success.light,
+  },
+}));
+
+const GreenButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.success.light,
+  color: theme.palette.common.white,
+  '&:hover': {
+    backgroundColor: theme.palette.success.main,
+  },
+}));
 
 export default function Footer() {
   const getCurrentYear = () => new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white py-10">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Logo and Social Media */}
-        <div>
-          <Link
-            to="home"
-            smooth={true}
-            offset={-80}
-            className="flex items-center cursor-pointer mb-4"
-          >
-            <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
-            <h1 className="text-xl font-bold ml-4">Fanatic</h1>
-          </Link>
-          <p className="text-gray-400 mb-4">
-            Follow us on social media for the latest updates.
-          </p>
-          <div className="flex space-x-4">
-            <a href="#" className="text-gray-400 hover:text-blue-500">
-              {/* Example icon, replace with actual icons */}
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-500">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-500">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-blue-500">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-          </div>
-        </div>
+    <FooterRoot>
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          {/* Logo and About */}
+          <Grid item xs={12} md={3}>
+            <Box display="flex" alignItems="center" mb={2}>
+              <LocalFlorist fontSize="large" />
+              <Typography variant="h5" ml={1} fontWeight="bold">
+                Farmissan
+              </Typography>
+            </Box>
+            <Typography variant="body2" mb={2}>
+              Cultivating a greener future through sustainable farming practices and innovative agricultural solutions.
+            </Typography>
+            <Box>
+              <SocialButton size="small" aria-label="facebook">
+                <Facebook />
+              </SocialButton>
+              <SocialButton size="small" aria-label="twitter">
+                <Twitter />
+              </SocialButton>
+              <SocialButton size="small" aria-label="instagram">
+                <Instagram />
+              </SocialButton>
+              <SocialButton size="small" aria-label="linkedin">
+                <LinkedIn />
+              </SocialButton>
+            </Box>
+          </Grid>
 
-        {/* Links */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h2 className="font-bold mb-4">Quick Links</h2>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="services"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="projects"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="blog"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="pricing"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-bold mb-4">Company</h2>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="about"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="team"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Our Team
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="contact"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="careers"
-                  smooth={true}
-                  offset={-80}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Careers
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+          {/* Quick Links */}
+          <Grid item xs={6} sm={3} md={2}>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              Quick Links
+            </Typography>
+            <List dense>
+              {['Home', 'Services', 'Products', 'About Us', 'Contact'].map((text) => (
+                <ListItem key={text} disablePadding>
+                  <FooterLink variant="body2">{text}</FooterLink>
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
 
-        {/* Newsletter */}
-        <div>
-          <h2 className="font-bold mb-4">Subscribe to Our Newsletter</h2>
-          <form className="flex flex-col space-y-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="p-2 rounded bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
-            />
-            <button
-              type="submit"
-              className="p-2 rounded bg-blue-600 hover:bg-blue-700 text-white transition-colors"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
+          {/* Services */}
+          <Grid item xs={6} sm={3} md={2}>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              Our Services
+            </Typography>
+            <List dense>
+              {['Crop Planning', 'Soil Analysis', 'Irrigation', 'Organic Farming', 'Farm Management'].map((text) => (
+                <ListItem key={text} disablePadding>
+                  <FooterLink variant="body2">{text}</FooterLink>
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
 
-      {/* Copyright */}
-      <div className="mt-8 border-t border-gray-700 pt-4 text-center">
-        <p className="text-gray-400 text-sm">
-          © {getCurrentYear()} Fanatic. All Rights Reserved.
-        </p>
-      </div>
-    </footer>
+          {/* Contact Info */}
+          <Grid item xs={12} sm={6} md={2}>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              Contact Us
+            </Typography>
+            <List dense>
+              <ListItem disablePadding>
+                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
+                  <LocationOn fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="123 Farm Road, Green Valley, 12345" primaryTypographyProps={{ variant: 'body2' }} />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
+                  <Phone fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="+1 (555) 123-4567" primaryTypographyProps={{ variant: 'body2' }} />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
+                  <Email fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="info@farmissan.com" primaryTypographyProps={{ variant: 'body2' }} />
+              </ListItem>
+            </List>
+          </Grid>
+          
+          {/* Newsletter */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              Newsletter
+            </Typography>
+            <Typography variant="body2" mb={2}>
+              Stay updated with our latest news and offers!
+            </Typography>
+            <Box component="form" noValidate autoComplete="off">
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="dense"
+                required
+                id="email"
+                placeholder="Enter your email"
+                name="email"
+                autoComplete="email"
+                size="small"
+                sx={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  input: { color: 'white' },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                  },
+                }}
+              />
+              <GreenButton
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 1 }}
+              >
+                Subscribe
+              </GreenButton>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ my: 4, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+        
+        {/* Copyright */}
+        <Box textAlign="center">
+          <Typography variant="body2">
+            © {getCurrentYear()} Farmissan. All Rights Reserved.
+          </Typography>
+        </Box>
+      </Container>
+    </FooterRoot>
   );
 }

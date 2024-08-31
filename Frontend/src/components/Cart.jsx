@@ -9,6 +9,7 @@ import CartItem from './CartItem';
 
 function Cart() {
   const { cartItems, getTotalPrice } = useCart();
+  console.log(getTotalPrice())
 
   return (
     <Paper elevation={3} sx={{ p: 3, maxWidth: 800, mx: 'auto', mt: 4 }}>
@@ -40,7 +41,7 @@ function Cart() {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h5">Total:</Typography>
             <Typography variant="h5" color="primary" fontWeight="bold">
-              ${getTotalPrice().toFixed(2)}
+              ${getTotalPrice()}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

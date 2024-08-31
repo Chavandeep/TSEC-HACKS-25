@@ -8,7 +8,6 @@ import { useCart } from '../hooks/useCart';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import HandshakeIcon from '@mui/icons-material/Handshake';
 
 function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -86,12 +85,7 @@ function ProductCard({ product }) {
             >
               <ShoppingCartIcon />
             </IconButton>
-            <IconButton 
-              size="small"
-              sx={{ color: 'primary.main' }}
-            >
-              <HandshakeIcon />
-            </IconButton>
+
           </Box>
         </Stack>
       </CardContent>

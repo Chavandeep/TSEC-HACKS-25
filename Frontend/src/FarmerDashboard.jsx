@@ -12,7 +12,6 @@ const FarmerDashboard = () => {
                     <li><a href="#" className="text-indigo-500 hover:underline">Analytics</a></li>
                 </ul>
             </nav>
-            {/* Add your content here */}
         </div>
     );
 };

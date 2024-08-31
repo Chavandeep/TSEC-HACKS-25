@@ -88,7 +88,6 @@ function App() {
           <Route path="/cart" element={<PrivateRoute element={CartPage} />} />
           <Route path="/checkout" element={<PrivateRoute element={CheckoutPage} />} />
           <Route path="/order-confirmation" element={<PrivateRoute element={OrderConfirmation} />} />
-          <Route path="/upload" element={<PrivateRoute element={ProductUpload} />} />
           <Route path="/posting" element={<PrivateRoute element={Test} />} />
           <Route path="/inventory" element={<PrivateRoute element={Inventory} />} />
           <Route path="/con" element={<PrivateRoute element={Farmer_Connect} />} />

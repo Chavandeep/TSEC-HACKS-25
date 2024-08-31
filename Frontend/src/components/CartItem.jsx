@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, 
-  Typography, Box, Chip, Button, Grid
+  Typography, Box, Chip, Grid
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,10 +10,9 @@ import { useCart } from '../hooks/useCart';
 
 function CartItem({ item }) {
   const { updateCartItemQuantity, removeFromCart } = useCart();
-
-  const discountedPrice = item.discount 
-    ? item.price * (1 - item.discount / 100) 
-    : item.price;
+  const discountAmount = item.marketPrice - item.productPrice;
+  const discountPercentage = ((discountAmount / item.marketPrice) * 100).toFixed(2);
+  const discountedPrice = item.productPrice;
 
   return (
     <ListItem 
@@ -41,31 +40,30 @@ function CartItem({ item }) {
             primary={
               <Typography variant="h6" component="div" sx={{ mb: 1 }}>
                 {item.name}
-                {item.discount > 0 && (
+                {discountPercentage > 0 && (
                   <Chip 
-                    label={`${item.discount}% OFF`} 
-                    color="secondary" 
+                    label={`${discountPercentage}% OFF`} 
+                    color="primary" 
                     size="small" 
-                    sx={{ ml: 1 }}
                   />
                 )}
               </Typography>
             }
             secondary={
-              <React.Fragment>
+              <>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                   {item.description}
                 </Typography>
                 <Typography component="span" variant="body1" color="text.primary">
-                  ${discountedPrice.toFixed(2)} x {item.quantity}
+                  ${discountedPrice} x {item.quantity}
                 </Typography>
-              </React.Fragment>
+              </>
             }
           />
         </Grid>
         <Grid item xs={12} sm={2} sx={{ textAlign: 'center' }}>
           <Typography component="span" variant="body1" color="primary" fontWeight="bold">
-            ${(discountedPrice * item.quantity).toFixed(2)}
+            ${(discountedPrice * item.quantity)}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={2}>
