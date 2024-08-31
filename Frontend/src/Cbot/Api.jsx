@@ -30,8 +30,9 @@ function Api() {
             vegIds: vegIds,
           },
           headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-          },
+            "Origin": 'localhost://5173', 
+            "x-requested-with": "XMLHttpRequest"
+          }
         }
       );
 
@@ -75,7 +76,7 @@ function Api() {
       setError(null);
     } catch (err) {
       console.error('Error fetching data:', err);
-      setError('Failed to fetch data');
+      setError(`Failed to fetch data: ${err.message}`);
     }
   };
 
