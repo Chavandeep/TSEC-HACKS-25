@@ -7,7 +7,7 @@ import { Card, CardContent, Typography, TextField, Grid, Button, CircularProgres
 const API_KEY = '579b464db66ec23bdd000001b9bf6c6fa19840677fe9fbacb9c42a31';
 const API_URL = 'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070';
 
-const Api = () => {
+const Api3 = () => {
   const [stateName, setStateName] = useState('');
   const [commodity, setCommodity] = useState('');
   const [data, setData] = useState([]);
@@ -226,4 +226,4 @@ const Api = () => {
   );
 };
 
-export default Api;
+export default Api3;

@@ -47,6 +47,7 @@ import Viewer2 from './pages/Viewer2';
 import Negochat from './pages/Negochat';
 import ChatbotApp from './ChatbotApp';
 import Home from './pages/Home/Home'
+import Api3 from './Cbot/Api3';
 
 
 firebase.initializeApp({
@@ -83,6 +84,7 @@ function App() {
           <Route path='/chatbot' element={<PrivateRoute element={Cbot} />} />
           <Route path="/chat/:negotiationId" element={<ChatInterface />} />
           <Route path='/api' element={<PrivateRoute element={Api} />} />
+          <Route path='/api3' element={<PrivateRoute element={Api3} />} />
           <Route path='/farmerdb' element={<PrivateRoute element={FarmerDashboard} />} />
           <Route path='/retailerdb' element={<PrivateRoute element={RetailerDashboard} />} />
           <Route path='/consumerdb' element={<PrivateRoute element={ConsumerDashboard} />} />
