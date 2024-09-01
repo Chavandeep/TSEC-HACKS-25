@@ -9,7 +9,7 @@ import CartItem from './CartItem';
 
 function Cart() {
   const { cartItems, getTotalPrice } = useCart();
-  console.log(getTotalPrice())
+  console.log(cartItems)
 
   return (
     <Paper elevation={3} sx={{ p: 3, maxWidth: 800, mx: 'auto', mt: 4 }}>

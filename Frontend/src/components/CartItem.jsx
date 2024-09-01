@@ -28,7 +28,7 @@ function CartItem({ item }) {
         <Grid item xs={12} sm={2}>
           <ListItemAvatar>
             <Avatar 
-              src={item.image} 
+              src={item.productPicURL} 
               alt={item.name} 
               variant="rounded"
               sx={{ width: 80, height: 80 }}
@@ -39,7 +39,7 @@ function CartItem({ item }) {
           <ListItemText
             primary={
               <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-                {item.name}
+                {item.productName}
                 {discountPercentage > 0 && (
                   <Chip 
                     label={`${discountPercentage}% OFF`} 
