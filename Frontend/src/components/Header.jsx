@@ -85,15 +85,17 @@ const Header = () => {
     setLanguage(e.target.value);
   };
 
-  const menuItems = ['Home', 'Products', 'About Us', 'Blog', 'Contact'];
+  const menuItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'About Us', path: '/trans' },
+    { name: 'Loans', path: '/loans' }
+  ];
 
   const MenuLink = ({ to, children }) => (
     <Box
-      component={ScrollLink}
+      component={RouterLink}
       to={to}
-      smooth={true}
-      spy={true}
-      offset={-70}
       sx={{
         cursor: 'pointer',
         color: 'text.primary',
@@ -131,12 +133,12 @@ const Header = () => {
         }}
       >
         <Toolbar className="container mx-auto px-4">
-          <ScrollLink to="home" smooth={true} className="flex items-center cursor-pointer">
+          <RouterLink to="/" className="flex items-center cursor-pointer">
             <LocalFloristIcon sx={{ color: theme.palette.primary.main, fontSize: 40 }} />
             <Typography variant="h6" sx={{ ml: 2, color: theme.palette.primary.main }}>
               Farmissan
             </Typography>
-          </ScrollLink>
+          </RouterLink>
 
           {isMobile ? (
             <>
@@ -155,9 +157,9 @@ const Header = () => {
                 onClose={handleClose}
               >
                 {menuItems.map((item) => (
-                  <MenuItem key={item} onClick={handleClose}>
-                    <MenuLink to={item.toLowerCase().replace(' ', '-')}>
-                      {item}
+                  <MenuItem key={item.name} onClick={handleClose}>
+                    <MenuLink to={item.path}>
+                      {item.name}
                     </MenuLink>
                   </MenuItem>
                 ))}
@@ -171,8 +173,8 @@ const Header = () => {
           ) : (
             <Box className="ml-auto flex items-center space-x-6">
               {menuItems.map((item) => (
-                <MenuLink key={item} to={item.toLowerCase().replace(' ', '-')}>
-                  {item}
+                <MenuLink key={item.name} to={item.path}>
+                  {item.name}
                 </MenuLink>
               ))}
               <Box

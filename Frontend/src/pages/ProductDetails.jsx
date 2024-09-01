@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseConfig'; // Adjust the path to your Firebase config file
 import { useCart } from '../hooks/useCart';
+import { toast, ToastContainer } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 
 function ProductDetails() {
   const { id } = useParams(); // Assuming the product ID is passed in the URL
@@ -61,6 +63,7 @@ function ProductDetails() {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+    toast.success('Added to cart!'); // Show success toast notification
   };
 
   if (!product || !farmerDetails) {
@@ -164,6 +167,9 @@ function ProductDetails() {
           </div>
         </div>
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }

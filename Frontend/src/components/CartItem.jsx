@@ -29,7 +29,7 @@ function CartItem({ item }) {
           <ListItemAvatar>
             <Avatar 
               src={item.image} 
-              alt={item.name} 
+              alt={item.productName} 
               variant="rounded"
               sx={{ width: 80, height: 80 }}
             />
