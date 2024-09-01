@@ -8,7 +8,7 @@ const Translatew = () => {
   return (
     <div className="p-4">
       <h2 className="text-xl font-semibold">
-        <Translate from="en" to={language}>About Us</Translate>
+        <Translate from="en" to="hn">About Us</Translate>
       </h2>
       <p className="mt-2">
         <Translate from="en" to={language}>

@@ -16,7 +16,7 @@ import Signup from './SignUp';
 import FarmerDashboard from './FarmerDashboard';
 import RetailerDashboard from './RetailerDashboard';
 import ConsumerDashboard from './ConsumerDashboard';
-import Translatew from './Translatew';
+import Translate from './Translate';
 import ChalaHai from './Cbot/ChalaHai';
 import FormFill from './FormFill';
 import PrivateRoute from './PrivateRoute';
@@ -44,6 +44,8 @@ import MyProfile from './myProfile';
 import Loans from './pages/Loans';
 import FarmVisit from './pages/FarmVisit';
 import Viewer2 from './pages/Viewer2';
+import ChatbotApp from './ChatbotApp';
+
 
 firebase.initializeApp({
   apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
@@ -76,12 +78,12 @@ function App() {
           <Route path='/desc' element={<PrivateRoute element={ProductDescription} />} />
           <Route path='/plans' element={<PrivateRoute element={Plans} />} />
           <Route path='/chatbot' element={<PrivateRoute element={Cbot} />} />
-          <Route path='/nego' element={<PrivateRoute element={Negotiate} />} />
+          <Route path="/chat/:negotiationId" element={<ChatInterface />} />
           <Route path='/api' element={<PrivateRoute element={Api} />} />
           <Route path='/farmerdb' element={<PrivateRoute element={FarmerDashboard} />} />
           <Route path='/retailerdb' element={<PrivateRoute element={RetailerDashboard} />} />
           <Route path='/consumerdb' element={<PrivateRoute element={ConsumerDashboard} />} />
-          <Route path='/trans' element={<PrivateRoute element={Translatew} />} />
+          <Route path='/trans' element={<PrivateRoute element={Translate} />} />
           <Route path='/cha' element={<PrivateRoute element={ChalaHai} />} />
           <Route path='/fill' element={<PrivateRoute element={FormFill} />} />
           <Route path="/list" element={<PrivateRoute element={UserList} />} />
@@ -100,10 +102,15 @@ function App() {
           <Route path="/loans" element={<PrivateRoute element={Loans} />} />
           <Route path="/farmvisit" element={<PrivateRoute element={FarmVisit} />} />
          
+         
+         
+         
+         
+         
           <Route path="/vieww" element={<PrivateRoute element={Viewer2} />} />
 
-
         </Routes>
+        <ChatbotApp/>
         <Footer/>
       </Router>
         </CartProvider>

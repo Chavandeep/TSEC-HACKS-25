@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { db } from './Firebase/firebaseConfig'; 
+import { collection, query, onSnapshot, addDoc, doc, getDoc } from 'firebase/firestore';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
 
-const ChatInterface = () => {
+const ChatInterface = ({ userId }) => {
+  const { negotiationId } = useParams();
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [currentOffer, setCurrentOffer] = useState(1000); // Initial offer
+  const [currentOffer, setCurrentOffer] = useState(1000);
   const [negotiationStage, setNegotiationStage] = useState(0);
+  const [userType, setUserType] = useState('');
   const messagesEndRef = useRef(null);
 
   const stages = [
@@ -15,15 +22,59 @@ const ChatInterface = () => {
   ];
 
   useEffect(() => {
-    // Simulate farmer's initial offer
-    setMessages([{ role: 'farmer', text: `I offer $${currentOffer} for the crop.` }]);
-  }, []);
+    if (!userId || !negotiationId) {
+      console.error("User ID or Negotiation ID is missing.");
+      return;
+    }
+
+    const fetchUserType = async () => {
+      try {
+        const userDocRef = doc(db, 'userDetails', userId);
+        const userSnapshot = await getDoc(userDocRef);
+
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.data();
+          setUserType(userData.userType || '');
+        } else {
+          console.error("User document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching userType: ", error);
+      }
+    };
+
+    fetchUserType();
+  }, [userId, negotiationId]);
+
+  useEffect(() => {
+    if (negotiationId) {
+      const messagesRef = collection(db, `negotiations/${negotiationId}/messages`);
+      const q = query(messagesRef);
+
+      const unsubscribe = onSnapshot(q, snapshot => {
+        const messagesList = snapshot.docs.map(doc => doc.data());
+        setMessages(messagesList);
+
+        const latestMessage = snapshot.docs[snapshot.docs.length - 1]?.data();
+        if (latestMessage?.role === 'customer' && userType === 'farmer') {
+          toast(`New offer from customer: $${latestMessage.text}`);
+        }
+      });
+
+      return () => unsubscribe();
+    }
+  }, [negotiationId, userType]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleAction = (action) => {
+  const handleAction = async (action) => {
+    if (!userType) {
+      toast.error("User type is not determined.");
+      return;
+    }
+
     let newMessage = '';
     switch(action) {
       case 'ACCEPT':
@@ -39,29 +90,27 @@ const ChatInterface = () => {
         return;
     }
 
-    setMessages([...messages, { role: 'customer', text: newMessage }]);
-    setMessage('');
+    const messageObj = { role: userType.toLowerCase(), text: newMessage };
+    const messagesRef = collection(db, `negotiations/${negotiationId}/messages`);
 
-    if (action === 'ACCEPT' || action === 'REJECT') {
-      setNegotiationStage(stages.length - 1); // End negotiation
-    } else if (action === 'COUNTEROFFER') {
-      const counterOffer = parseFloat(message);
-      setCurrentOffer(counterOffer);
+    try {
+      await addDoc(messagesRef, messageObj);
+      setMessage('');
 
-      // Simulate farmer's response
-      setTimeout(() => {
-        let farmerResponse;
-        if (negotiationStage < stages.length - 2) {
-          const newOffer = Math.round((currentOffer + counterOffer) / 2);
-          farmerResponse = `How about we meet in the middle at $${newOffer}?`;
-          setCurrentOffer(newOffer);
-          setNegotiationStage(negotiationStage + 1);
-        } else {
-          farmerResponse = "This is my final offer. Do you accept?";
-          setNegotiationStage(stages.length - 1);
-        }
-        setMessages(prev => [...prev, { role: 'farmer', text: farmerResponse }]);
-      }, 1000);
+      if (action === 'ACCEPT' || action === 'REJECT') {
+        setNegotiationStage(stages.length - 1);
+        toast(newMessage);
+      } else if (action === 'COUNTEROFFER') {
+        const counterOffer = parseFloat(message);
+        setCurrentOffer(counterOffer);
+
+        setTimeout(async () => {
+          const farmerResponse = `Please provide a new offer.`;
+          await addDoc(messagesRef, { role: 'farmer', text: farmerResponse });
+        }, 1000);
+      }
+    } catch (error) {
+      console.error("Error adding document: ", error);
     }
   };
 
@@ -76,8 +125,8 @@ const ChatInterface = () => {
           <div
             key={index}
             className={`mb-2 p-3 rounded-lg max-w-[70%] ${
-              msg.role === 'farmer' 
-                ? 'bg-green-100 text-green-800 self-start' 
+              msg.role === 'farmer'
+                ? 'bg-green-100 text-green-800 self-start'
                 : 'bg-blue-100 text-blue-800 self-end ml-auto'
             }`}
           >
@@ -117,6 +166,7 @@ const ChatInterface = () => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
