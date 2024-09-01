@@ -44,6 +44,7 @@ import MyProfile from './myProfile';
 import Loans from './pages/Loans';
 import FarmVisit from './pages/FarmVisit';
 import Viewer2 from './pages/Viewer2';
+import Negochat from './pages/Negochat';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
@@ -99,6 +100,7 @@ function App() {
           <Route path="/myprofile" element={<PrivateRoute element={MyProfile} />} />
           <Route path="/loans" element={<PrivateRoute element={Loans} />} />
           <Route path="/farmvisit" element={<PrivateRoute element={FarmVisit} />} />
+          <Route path="/negochat" element={<PrivateRoute element={Negochat} />} />
          
           <Route path="/vieww" element={<PrivateRoute element={Viewer2} />} />
 
