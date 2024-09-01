@@ -30,7 +30,7 @@ function Api() {
             vegIds: vegIds,
           },
           headers: {
-            "Origin": 'localhost://5173', 
+            "Origin": 'localhost:5173', 
             "x-requested-with": "XMLHttpRequest"
           }
         }
