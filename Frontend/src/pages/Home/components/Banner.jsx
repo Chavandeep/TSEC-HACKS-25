@@ -6,7 +6,7 @@ export default function Banner() {
       className="flex justify-center pt-44 pb-40"
       id="banner"
       style={{
-        background: 'url("../image/banner-bg.webp") no-repeat center center / cover',
+        background: 'url("/banner-bg.webp") no-repeat center center / cover',
       }}
     >
       <div className="text-center w-[60rem]">

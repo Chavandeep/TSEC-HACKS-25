@@ -28,7 +28,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './pages/Home';
+import AllProducts from './pages/AllProducts';
 import ProductDetails from './pages/ProductDetails';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
@@ -46,6 +46,7 @@ import FarmVisit from './pages/FarmVisit';
 import Viewer2 from './pages/Viewer2';
 import Negochat from './pages/Negochat';
 import ChatbotApp from './ChatbotApp';
+import Home from './pages/Home/Home'
 
 
 firebase.initializeApp({
@@ -70,6 +71,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<PublicRoute element={Home} restricted={false} />} />
+          <Route path='/products' element={<PublicRoute element={AllProducts} restricted={false} />} />
           <Route path='/about' element={<PublicRoute element={About} restricted={false} />} />
           <Route path='/login' element={<PublicRoute element={Login} restricted={true} />} />
           <Route path='/signup' element={<PublicRoute element={Signup} restricted={true} />} />

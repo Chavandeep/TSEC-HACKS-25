@@ -1,6 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import PersonIcon from '@mui/icons-material/Person';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 export default function Blogs() {
   return (
@@ -12,17 +12,17 @@ export default function Blogs() {
         {[1, 2, 3].map((_, index) => (
           <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg">
             <img
-              src={`image/blog-${index + 1}.jpg`}
+              src={`/blog-${index + 1}.jpg`}
               alt=""
               className="object-cover w-full h-[25em]"
             />
             <div className="p-8">
               <div className="flex justify-between border-b border-gray-200 pb-6 mb-4">
                 <a href="/" className="text-gray-500 text-lg flex items-center">
-                  <FontAwesomeIcon icon={faUser} className="text-orange mr-2" /> by user
+                  <PersonIcon className="text-orange mr-2" /> by user
                 </a>
                 <a href="/" className="text-gray-500 text-lg flex items-center">
-                  <FontAwesomeIcon icon={faCalendar} className="text-orange mr-2" /> 1st May, 2021
+                  <CalendarTodayIcon className="text-orange mr-2" /> 1st May, 2021
                 </a>
               </div>
               <h3 className="text-2xl text-black leading-relaxed mb-2">
