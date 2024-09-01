@@ -41,6 +41,7 @@ import Farmer_Connect from './pages/Farmer_Connect';
 import Negotiation from './pages/Negotiation';
 import Notifications from './pages/Notifications';
 import MyProfile from './myProfile';
+import Viewer2 from './pages/Viewer2';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
@@ -94,6 +95,8 @@ function App() {
           <Route path="/nego" element={<PrivateRoute element={Negotiation} />} />
           <Route path="/noti" element={<PrivateRoute element={Notifications} />} />
           <Route path="/myprofile" element={<PrivateRoute element={MyProfile} />} />
+         
+          <Route path="/vieww" element={<PrivateRoute element={Viewer2} />} />
 
 
         </Routes>

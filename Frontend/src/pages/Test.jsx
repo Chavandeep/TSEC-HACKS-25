@@ -25,7 +25,7 @@ const Test = () => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
+      <input type="file" accept=".jpeg, .jpg, .png" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
       <p>{uploadStatus}</p>
     </div>
