@@ -1,18 +1,18 @@
 import React from 'react';
-import Banner from './Banner';
+import Banner from './components/Banner';
 import Features from './components/Features';
-import Products from './components/Products';
+// import Product from './components/Product';
 import Categories from './components/Categories';
 import Reviews from './components/Reviews';
 import Blogs from './components/Blogs';
 
-function App() {
+function Home() {
   return (
     <div className="overflow-x-hidden">
 
       <Banner />
       <Features />
-      <Products />
+      {/* <Product /> */}
       <Categories />
       <Reviews />
       <Blogs />
@@ -20,4 +20,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

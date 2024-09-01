@@ -5,7 +5,7 @@ import SearchBar from '../components/Searchbar';
 import CategoryFilter from '../components/CategoryFilter';
 import { getProducts } from '../services/api';
 
-function Home() {
+function AllProducts() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -103,4 +103,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AllProducts;
