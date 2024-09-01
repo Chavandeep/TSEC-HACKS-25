@@ -12,23 +12,21 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [productName, setProductName] = useState('');
-  const [availability, setAvailability] = useState('all');
-  const [discount, setDiscount] = useState('noDiscount');
-  const [rating, setRating] = useState(0);
+  const [farmLocation, setFarmLocation] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await getProducts();
       setProducts(data);
       setFilteredProducts(data);
-      setCategories([...new Set(data.map(product => product.category))]);
+      setCategories([...new Set(data.map(product => product.productCategory))]);
     };
     fetchProducts();
   }, []);
 
   useEffect(() => {
     filterProducts();
-  }, [selectedCategory, priceRange, productName, availability, discount, rating]);
+  }, [selectedCategory, priceRange, productName, farmLocation]);
 
   const handleSearch = (query) => {
     setProductName(query);
@@ -42,55 +40,38 @@ function Home() {
     setPriceRange(range);
   };
 
-  const handleAvailabilityChange = (status) => {
-    setAvailability(status);
-  };
-
-  const handleDiscountChange = (discount) => {
-    setDiscount(discount);
-  };
-
-  const handleRatingChange = (rating) => {
-    setRating(rating);
+  const handleFarmLocationChange = (location) => {
+    setFarmLocation(location);
   };
 
   const filterProducts = () => {
     let filtered = products;
 
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category === selectedCategory);
+      filtered = filtered.filter(product => product.productCategory === selectedCategory);
     }
 
     if (priceRange !== 'all') {
       if (priceRange === 'under10') {
-        filtered = filtered.filter(product => product.price < 10);
+        filtered = filtered.filter(product => product.productPrice < 10);
       } else if (priceRange === 'over100') {
-        filtered = filtered.filter(product => product.price > 100);
+        filtered = filtered.filter(product => product.productPrice > 100);
       } else {
         const [min, max] = priceRange.split('-').map(Number);
         filtered = filtered.filter(product =>
-          product.price >= (min || 0) && product.price <= (max || Infinity)
+          product.productPrice >= (min || 0) && product.productPrice <= (max || Infinity)
         );
       }
     }
 
     if (productName) {
       filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(productName.toLowerCase())
+        product.productName.toLowerCase().includes(productName.toLowerCase())
       );
     }
 
-    if (availability === 'inStock') {
-      filtered = filtered.filter(product => product.inStock );
-    }
-
-    if (discount !== 'noDiscount') {
-      const discountValue = parseInt(discount, 10);
-      filtered = filtered.filter(product => product.discount >= discountValue);
-    }
-
-    if (rating > 0) {
-      filtered = filtered.filter(product => product.rating >= rating);
+    if (farmLocation) {
+      filtered = filtered.filter(product => product.farmLocation === farmLocation);
     }
 
     setFilteredProducts(filtered);
@@ -108,12 +89,8 @@ function Home() {
               onCategoryChange={handleCategoryChange}
               priceRange={priceRange}
               onPriceRangeChange={handlePriceRangeChange}
-              availability={availability}
-              onAvailabilityChange={handleAvailabilityChange}
-              discount={discount}
-              onDiscountChange={handleDiscountChange}
-              rating={rating}
-              onRatingChange={handleRatingChange}
+              farmLocation={farmLocation}
+              onFarmLocationChange={handleFarmLocationChange}
             />
           </Box>
         </Grid>

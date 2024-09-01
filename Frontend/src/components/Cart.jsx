@@ -41,7 +41,7 @@ function Cart() {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h5">Total:</Typography>
             <Typography variant="h5" color="primary" fontWeight="bold">
-              ${getTotalPrice()}
+            ₹{getTotalPrice().toFixed(2)}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

@@ -43,7 +43,7 @@ function ProductCard({ product }) {
         <Stack spacing={1}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
-              ${Number(product.productPrice).toFixed(2)}
+            ₹{Number(product.productPrice).toFixed(2)}
             </Typography>
             {discount > 0 && (
               <Chip 
@@ -69,7 +69,7 @@ function ProductCard({ product }) {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <IconButton 
               component={Link} 
-              to={`/product/${product.productName}`} // Use product name or unique ID
+              to={`/product/${product.id}`} // Use product name or unique ID
               size="small"
               sx={{ color: 'primary.main' }}
             >

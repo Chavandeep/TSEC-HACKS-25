@@ -55,7 +55,7 @@ function CartItem({ item }) {
                   {item.description}
                 </Typography>
                 <Typography component="span" variant="body1" color="text.primary">
-                  ${discountedPrice} x {item.quantity}
+                ₹{discountedPrice} x {item.quantity}
                 </Typography>
               </>
             }
@@ -63,7 +63,7 @@ function CartItem({ item }) {
         </Grid>
         <Grid item xs={12} sm={2} sx={{ textAlign: 'center' }}>
           <Typography component="span" variant="body1" color="primary" fontWeight="bold">
-            ${(discountedPrice * item.quantity)}
+          ₹{(discountedPrice * item.quantity)}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={2}>
