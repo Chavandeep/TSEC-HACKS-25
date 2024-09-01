@@ -24,6 +24,7 @@ import {
   Email,
   LocationOn
 } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const FooterRoot = styled('footer')(({ theme }) => ({
   backgroundColor: theme.palette.success.dark,
@@ -89,106 +90,216 @@ export default function Footer() {
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={6} sm={3} md={2}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Quick Links
             </Typography>
             <List dense>
-              {['Home', 'Services', 'Products', 'About Us', 'Contact'].map((text) => (
-                <ListItem key={text} disablePadding>
-                  <FooterLink variant="body2">{text}</FooterLink>
-                </ListItem>
-              ))}
+              <ListItem disablePadding>
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Home</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/about" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">About</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/login" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Login</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Signup</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/upload" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Upload</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/management" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Management</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/desc" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Description</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/plans" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Plans</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/chatbot" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Chatbot</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/api" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">API</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/farmerdb" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Farmer Dashboard</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/retailerdb" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Retailer Dashboard</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/consumerdb" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Consumer Dashboard</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/trans" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Translate</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/cha" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Chala Hai</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/fill" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Fill</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/list" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">User List</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/profile/:id" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">User Profile</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/negotiate/:farmerId" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Negotiate</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/product/:id" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Product Details</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/cart" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Cart</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/checkout" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Checkout</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/order-confirmation" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Order Confirmation</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/posting" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Posting</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/inventory" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Inventory</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/con" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Farmer Connect</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/nego" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Negotiation</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/noti" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Notifications</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/myprofile" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">My Profile</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/loans" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Loans</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/farmvisit" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Farm Visit</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/negochat" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Nego Chat</FooterLink>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <Link to="/vieww" style={{ textDecoration: 'none' }}>
+                  <FooterLink variant="body2">Vieww</FooterLink>
+                </Link>
+              </ListItem>
             </List>
           </Grid>
 
-          {/* Services */}
-          <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
-              Our Services
-            </Typography>
-            <List dense>
-              {['Crop Planning', 'Soil Analysis', 'Irrigation', 'Organic Farming', 'Farm Management'].map((text) => (
-                <ListItem key={text} disablePadding>
-                  <FooterLink variant="body2">{text}</FooterLink>
-                </ListItem>
-              ))}
-            </List>
-          </Grid>
-
-          {/* Contact Info */}
-          <Grid item xs={12} sm={6} md={2}>
+          {/* Contact Information */}
+          <Grid item xs={12} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Contact Us
             </Typography>
-            <List dense>
-              <ListItem disablePadding>
-                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
-                  <LocationOn fontSize="small" />
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <LocationOn />
                 </ListItemIcon>
-                <ListItemText primary="123 Farm Road, Green Valley, 12345" primaryTypographyProps={{ variant: 'body2' }} />
+                <ListItemText primary="123 Farm Street, Green City, CA 98765" />
               </ListItem>
-              <ListItem disablePadding>
-                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
-                  <Phone fontSize="small" />
+              <ListItem>
+                <ListItemIcon>
+                  <Phone />
                 </ListItemIcon>
-                <ListItemText primary="+1 (555) 123-4567" primaryTypographyProps={{ variant: 'body2' }} />
+                <ListItemText primary="+1 234 567 890" />
               </ListItem>
-              <ListItem disablePadding>
-                <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>
-                  <Email fontSize="small" />
+              <ListItem>
+                <ListItemIcon>
+                  <Email />
                 </ListItemIcon>
-                <ListItemText primary="info@farmissan.com" primaryTypographyProps={{ variant: 'body2' }} />
+                <ListItemText primary="info@farmissan.com" />
               </ListItem>
             </List>
           </Grid>
-          
-          {/* Newsletter */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
-              Newsletter
-            </Typography>
-            <Typography variant="body2" mb={2}>
-              Stay updated with our latest news and offers!
-            </Typography>
-            <Box component="form" noValidate autoComplete="off">
-              <TextField
-                fullWidth
-                variant="outlined"
-                margin="dense"
-                required
-                id="email"
-                placeholder="Enter your email"
-                name="email"
-                autoComplete="email"
-                size="small"
-                sx={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  input: { color: 'white' },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
-                  },
-                }}
-              />
-              <GreenButton
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 1 }}
-              >
-                Subscribe
-              </GreenButton>
-            </Box>
-          </Grid>
         </Grid>
 
-        <Divider sx={{ my: 4, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
-        
-        {/* Copyright */}
+        <Divider sx={{ my: 4 }} />
+
         <Box textAlign="center">
-          <Typography variant="body2">
-            © {getCurrentYear()} Farmissan. All Rights Reserved.
+          <Typography variant="body2" color="inherit">
+            © {getCurrentYear()} Farmissan. All rights reserved.
           </Typography>
+          <Box mt={2}>
+            <GreenButton variant="contained">Subscribe</GreenButton>
+          </Box>
         </Box>
       </Container>
     </FooterRoot>

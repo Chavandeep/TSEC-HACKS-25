@@ -63,7 +63,7 @@ const ChatbotApp = () => {
     <div>
       {/* Bot Icon */}
       <div onClick={toggleChatbot} className="fixed bottom-4 right-4 cursor-pointer">
-        <img src="/NutriBot.png" alt="Bot" className="w-20 h-20 rounded-full shadow-lg" />
+        <img src="/ChatbotLogo.png" alt="Bot" className="w-20 h-20 rounded-full shadow-lg" />
       </div>
 
       {/* Chatbox */}

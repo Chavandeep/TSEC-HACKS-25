@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Paper, Typography, List, ListItem, ListItemText, Box } from '@mui/material';
-import { collection, query, where, onSnapshot, doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseConfig'; // Adjust the path as necessary
 
-const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCustomerId='0kqgYSJUdQcTax4fpliYuS7clhw2' }) => {
+const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCustomerId = '0kqgYSJUdQcTax4fpliYuS7clhw2' }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [offerAmount, setOfferAmount] = useState('');
+  const [userType, setUserType] = useState(''); // Add state for user type
+
+  useEffect(() => {
+    // Fetch user type from Firestore
+    const fetchUserType = async () => {
+      try {
+        const userDocRef = doc(db, 'userDetails', currentFarmerId); // Adjust to get the user type for the current user
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUserType(userDoc.data().userType); // Assuming userType is stored in userData
+        }
+      } catch (error) {
+        console.error('Error fetching user type:', error);
+      }
+    };
+
+    fetchUserType();
+  }, [currentFarmerId]);
 
   useEffect(() => {
     // Document reference for the current farmer and customer chat
@@ -51,8 +69,12 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
 
   const handleSend = () => {
     if (inputMessage.trim()) {
-      addMessage('Retailer', inputMessage);
-      setInputMessage('');
+      if (userType) {
+        addMessage(userType, inputMessage); // Use the fetched user type
+        setInputMessage('');
+      } else {
+        console.error('User type is not available.');
+      }
     }
   };
 
@@ -63,7 +85,7 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
 
   const handleOffer = async (type) => {
     if (offerAmount && selectedProduct) {
-      await addMessage('Retailer', `${type}: $${offerAmount} for ${selectedProduct.name}`, 'offer');
+      await addMessage(userType, `${type}: $${offerAmount} for ${selectedProduct.name}`, 'offer');
       setOfferAmount('');
     }
   };
@@ -103,7 +125,7 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
           />
           <Button variant="contained" color="primary" onClick={() => handleOffer('Offer')} sx={{ mr: 1 }}>Offer</Button>
           <Button variant="contained" color="secondary" onClick={() => handleOffer('Counteroffer')} sx={{ mr: 1 }}>Counteroffer</Button>
-          <Button variant="contained" color="error" onClick={() => addMessage('Retailer', 'Offer rejected')}>Reject</Button>
+          <Button variant="contained" color="error" onClick={() => addMessage(userType, 'Offer rejected')}>Reject</Button>
         </Box>
       </Paper>
       <Paper elevation={3} sx={{ width: 300, p: 2, overflowY: 'auto' }}>
