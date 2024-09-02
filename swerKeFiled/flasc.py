@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app) 
 
 # Load your trained model
-model =tensorflow.keras.models.load_model('veggies_model.keras')
+model = tensorflow.keras.models.load_model('veggies_model.keras')
 
 class_labels = ['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi', 'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
 

@@ -48,6 +48,7 @@ import Negochat from './pages/Negochat';
 import ChatbotApp from './ChatbotApp';
 import Home from './pages/Home/Home'
 import Api3 from './Cbot/Api3';
+import View4 from './components/View4';
 
 
 firebase.initializeApp({
@@ -106,7 +107,9 @@ function App() {
           <Route path="/myprofile" element={<PrivateRoute element={MyProfile} />} />
           <Route path="/loans" element={<PrivateRoute element={Loans} />} />
           <Route path="/farmvisit" element={<PrivateRoute element={FarmVisit} />} />
+          
           <Route path="/negochat" element={<PrivateRoute element={Negochat} />} />
+          <Route path="/view" element={<PrivateRoute element={View4} />} />
          
          
          
