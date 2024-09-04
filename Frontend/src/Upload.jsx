@@ -131,7 +131,7 @@ function ProductUpload() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-700 font-medium mb-2" htmlFor="productPrice">
-                Seller's Price (₹)
+                Seller's Price (₹)/kg
               </label>
               <input
                 type="number"
@@ -144,7 +144,7 @@ function ProductUpload() {
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-2" htmlFor="marketPrice">
-                Market Price (₹)
+                Market Price (₹)/kg
               </label>
               <input
                 type="number"

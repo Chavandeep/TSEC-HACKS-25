@@ -8,17 +8,24 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
   const [inputMessage, setInputMessage] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [offerAmount, setOfferAmount] = useState('');
-  const [userType, setUserType] = useState(''); // Add state for user type
+  const [userType, setUserType] = useState('');
+
+  // Dummy products for the right panel
+  const demoProducts = [
+    { name: 'Apples', marketPrice: 100, sellingPrice: 90 },
+    { name: 'Bananas', marketPrice: 50, sellingPrice: 45 },
+    { name: 'Carrots', marketPrice: 80, sellingPrice: 70 },
+  ];
 
   useEffect(() => {
-    // Fetch user type from Firestore
     const fetchUserType = async () => {
       try {
-        const userDocRef = doc(db, 'userDetails', currentFarmerId); // Adjust to get the user type for the current user
+        const userDocRef = doc(db, 'userDetails', currentFarmerId); // Change to currentUserId if different
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          setUserType(userDoc.data().userType); // Assuming userType is stored in userData
+          setUserType(userDoc.data().userType); // Assuming userType is stored in userDetails         
         }
+        console.log(userType)
       } catch (error) {
         console.error('Error fetching user type:', error);
       }
@@ -28,10 +35,7 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
   }, [currentFarmerId]);
 
   useEffect(() => {
-    // Document reference for the current farmer and customer chat
     const chatDocRef = doc(db, 'Chats', `${currentFarmerId}_${currentCustomerId}`);
-
-    // Real-time listener for chat document
     const unsubscribe = onSnapshot(chatDocRef, (doc) => {
       if (doc.exists()) {
         const chatData = doc.data();
@@ -50,14 +54,12 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
 
     const chatDoc = await getDoc(chatDocRef);
     if (chatDoc.exists()) {
-      // Update existing document
       const chatData = chatDoc.data();
       const updatedMessages = sender === 'Farmer' ? [...chatData.farmerMessages, newMessage] : [...chatData.customerMessages, newMessage];
       await updateDoc(chatDocRef, {
         [sender === 'Farmer' ? 'farmerMessages' : 'customerMessages']: updatedMessages
       });
     } else {
-      // Create new document
       await setDoc(chatDocRef, {
         farmer_id: currentFarmerId,
         customer_id: currentCustomerId,
@@ -70,7 +72,7 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
   const handleSend = () => {
     if (inputMessage.trim()) {
       if (userType) {
-        addMessage(userType, inputMessage); // Use the fetched user type
+        addMessage(userType === 'Farmer' ? 'Customer' : 'Retailer', inputMessage);
         setInputMessage('');
       } else {
         console.error('User type is not available.');
@@ -85,8 +87,14 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
 
   const handleOffer = async (type) => {
     if (offerAmount && selectedProduct) {
-      await addMessage(userType, `${type}: $${offerAmount} for ${selectedProduct.name}`, 'offer');
+      await addMessage(userType === 'Farmer' ? 'Customer' : 'Retailer', `${type}: $${offerAmount} for ${selectedProduct.name}`, 'offer');
       setOfferAmount('');
+    }
+  };
+
+  const handleReject = async () => {
+    if (selectedProduct) {
+      await addMessage(userType === 'Farmer' ? 'Farmer' : 'Retailer', `Offer rejected for ${selectedProduct.name}`, 'reject');
     }
   };
 
@@ -125,18 +133,18 @@ const Negochat = ({ currentFarmerId = 'cZFdt8VQGFVXalPaEpSQGcLrL542', currentCus
           />
           <Button variant="contained" color="primary" onClick={() => handleOffer('Offer')} sx={{ mr: 1 }}>Offer</Button>
           <Button variant="contained" color="secondary" onClick={() => handleOffer('Counteroffer')} sx={{ mr: 1 }}>Counteroffer</Button>
-          <Button variant="contained" color="error" onClick={() => addMessage(userType, 'Offer rejected')}>Reject</Button>
+          <Button variant="contained" color="error" onClick={handleReject}>Reject</Button>
         </Box>
       </Paper>
       <Paper elevation={3} sx={{ width: 300, p: 2, overflowY: 'auto' }}>
         <Typography variant="h6" gutterBottom>Products</Typography>
-        {/* <List>
+        <List>
           {demoProducts.map((product, index) => (
             <ListItem key={index} button onClick={() => handleProductSelect(product)}>
               <ListItemText primary={product.name} secondary={`Market: $${product.marketPrice}, Selling: $${product.sellingPrice}`} />
             </ListItem>
           ))}
-        </List> */}
+        </List>
       </Paper>
     </Box>
   );

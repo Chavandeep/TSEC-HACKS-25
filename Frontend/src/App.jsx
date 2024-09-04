@@ -49,6 +49,8 @@ import ChatbotApp from './ChatbotApp';
 import Home from './pages/Home/Home'
 import Api3 from './Cbot/Api3';
 import View4 from './components/View4';
+import { Trans } from 'react-i18next';
+import { Calendar } from 'lucide-react';
 
 
 firebase.initializeApp({
@@ -74,7 +76,7 @@ function App() {
         <Routes>
           <Route path='/' element={<PublicRoute element={Home} restricted={false} />} />
           <Route path='/products' element={<PublicRoute element={AllProducts} restricted={false} />} />
-          <Route path='/about' element={<PublicRoute element={About} restricted={false} />} />
+          <Route path='/about' element={<PublicRoute element={Trans} restricted={false} />} />
           <Route path='/login' element={<PublicRoute element={Login} restricted={true} />} />
           <Route path='/signup' element={<PublicRoute element={Signup} restricted={true} />} />
 
@@ -117,6 +119,7 @@ function App() {
          
          
           <Route path="/vieww" element={<PrivateRoute element={Viewer2} />} />
+          <Route path="/cal" element={<PrivateRoute element={Calendar} />} />
 
         </Routes>
         <ChatbotApp/>

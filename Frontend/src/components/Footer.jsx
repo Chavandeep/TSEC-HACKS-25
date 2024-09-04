@@ -167,18 +167,18 @@ export default function Footer() {
                     </Link>
                   </ListItem>
                   <ListItem disablePadding>
-                    <Link to="/consumerdb" style={{ textDecoration: 'none' }}>
-                      <FooterLink variant="body2">Consumer Dashboard</FooterLink>
+                    <Link to="/negochat" style={{ textDecoration: 'none' }}>
+                      <FooterLink variant="body2">Negotiations</FooterLink>
                     </Link>
                   </ListItem>
                   <ListItem disablePadding>
-                    <Link to="/trans" style={{ textDecoration: 'none' }}>
-                      <FooterLink variant="body2">Translate</FooterLink>
+                    <Link to="/farmvisit" style={{ textDecoration: 'none' }}>
+                      <FooterLink variant="body2">Farm Visit</FooterLink>
                     </Link>
                   </ListItem>
                   <ListItem disablePadding>
-                    <Link to="/cha" style={{ textDecoration: 'none' }}>
-                      <FooterLink variant="body2">Chala Hai</FooterLink>
+                    <Link to="/view" style={{ textDecoration: 'none' }}>
+                      <FooterLink variant="body2">View</FooterLink>
                     </Link>
                   </ListItem>
                 </List>
