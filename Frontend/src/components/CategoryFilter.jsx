@@ -65,10 +65,10 @@ function CategoryFilter({
           onChange={(e) => onPriceRangeChange(e.target.value)}
         >
           <MenuItem value="all">All Prices</MenuItem>
-          <MenuItem value="under10">Under $10</MenuItem>
-          <MenuItem value="10-50">$10 - $50</MenuItem>
-          <MenuItem value="50-100">$50 - $100</MenuItem>
-          <MenuItem value="over100">Over $100</MenuItem>
+          <MenuItem value="under10">Under ₹10</MenuItem>
+          <MenuItem value="10-50">₹10 - ₹50</MenuItem>
+          <MenuItem value="50-100">₹50 - ₹100</MenuItem>
+          <MenuItem value="over100">Over ₹100</MenuItem>
         </Select>
       </FormControl>
 

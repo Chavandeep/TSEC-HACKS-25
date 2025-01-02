@@ -19,7 +19,7 @@ function Api() {
       setError('City Name and Vegetable IDs are required');
       return;
     }
-
+  
     try {
       const response = await axios.get(
         `https://cors-anywhere.herokuapp.com/https://vegetablemarketprice.com/api/dataapi/market/${cityName}/chartdatavalues`,
@@ -30,48 +30,49 @@ function Api() {
             vegIds: vegIds,
           },
           headers: {
-            "Origin": 'localhost:5173', 
-            "x-requested-with": "XMLHttpRequest"
-          }
+            "x-requested-with": "XMLHttpRequest",
+          },
         }
       );
-
+  
       const { columnMapping, data: apiData, columns } = response.data;
-
-      const vegIdArray = vegIds.split(',').map(id => id.trim());
-
+  
+      // Log API data for debugging
+      console.log('API Response:', response.data);
+  
+      const vegIdArray = vegIds.split(',').map(id => id.trim().toLowerCase());
+  
       const tableData = columnMapping
-        .filter(({ vegId }) => vegIdArray.includes(vegId))
+        .filter(({ vegId }) => vegIdArray.includes(vegId.toLowerCase()))
         .map(({ vegName, vegId }) => {
-          const vegetableData = apiData.find(series => series.name === vegName);
-
+          const vegetableData = apiData.find(series => series.name.toLowerCase() === vegName.toLowerCase());
+  
           if (!vegetableData || !vegetableData.data) {
-            console.warn(`No data found for vegetable: ${vegName}`);
             return {
               vegName,
               historicPrices: columns.map(date => ({
                 date,
                 retailPrice: 'N/A',
-                shoppingMallPrice: 'N/A'
-              }))
+                shoppingMallPrice: 'N/A',
+              })),
             };
           }
-
+  
           const historicPrices = columns.map((date, index) => {
             const entry = vegetableData.data[index] || {};
             return {
               date,
               retailPrice: entry.retailprice || 'N/A',
-              shoppingMallPrice: entry.shopingmallprice || 'N/A'
+              shoppingMallPrice: entry.shopingmallprice || 'N/A',
             };
           });
-
+  
           return {
             vegName,
-            historicPrices
+            historicPrices,
           };
         });
-
+  
       setData(tableData);
       setError(null);
     } catch (err) {
@@ -79,6 +80,7 @@ function Api() {
       setError(`Failed to fetch data: ${err.message}`);
     }
   };
+  
 
   // Format data for Chart.js
   const formatDataForChart = (data) => {
