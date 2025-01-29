@@ -1,59 +1,74 @@
-import './App.css';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import firebase, { auth } from '../firebase';
 
-firebase.initializeApp ({
-  apiKey: "AIzaSyCoxHQ3ZYWUSBq4hBFT5p70uKe7Z4vAnB0",
-  authDomain: "farmiedemo.firebaseapp.com",
-  projectId: "farmiedemo",
-  storageBucket: "farmiedemo.appspot.com",
-  messagingSenderId: "649821679551",
-  appId: "1:649821679551:web:57f4bcbee5c4b3f8373b0a",
-  measurementId: "G-WJ0SMFMJ5D"
-});
+const SignupForm = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [verificationId, setVerificationId] = useState('');
+  const [error, setError] = useState('');
 
-const auth = firebase.auth();
+  const handlePhoneNumberSubmit = (e) => {
+    e.preventDefault();
+    const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+    });
 
-function App() {
-  const [user] = useAuthState(auth);
-  const navigate = useNavigate();
+    auth.signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+      .then((confirmationResult) => {
+        setVerificationId(confirmationResult.verificationId);
+      })
+      .catch((err) => {
+        setError('Failed to send OTP: ' + err.message);
+      });
+  };
 
-  useEffect(() => {
-    if (user) {
-      navigate('/fill');
-    }
-  }, [user, navigate]);
+  const handleOtpSubmit = (e) => {
+    e.preventDefault();
+    const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, otp);
 
-  return (
-    <div className="flex h-screen">
-      <main className="flex-1 flex items-center justify-center">
-        {!user && <SignIn />}
-      </main>
-    </div>
-  );
-}
-
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    auth.signInWithCredential(credential)
+      .then((userCredential) => {
+        // OTP verification successful
+        console.log('OTP Verified:', userCredential.user);
+        // Proceed with registration or redirect to dashboard
+      })
+      .catch((err) => {
+        setError('Failed to verify OTP: ' + err.message);
+      });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-      <h2 className="text-4xl font-bold mb-4">Welcome to Farmissan</h2>
-      <p className="text-lg mb-6">Sign in to continue</p>
-      <button
-        onClick={signInWithGoogle}
-        className="px-6 py-3 text-md bg-white text-indigo-600 rounded-full shadow-lg hover:bg-indigo-100 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-      >
-        Sign In with Google
-      </button>
+    <div className="signup-form">
+      <h2>Register</h2>
+
+      <form onSubmit={handlePhoneNumberSubmit}>
+        <input
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="Enter phone number"
+          required
+        />
+        <button type="submit">Send OTP</button>
+      </form>
+
+      {verificationId && (
+        <form onSubmit={handleOtpSubmit}>
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            placeholder="Enter OTP"
+            required
+          />
+          <button type="submit">Verify OTP</button>
+        </form>
+      )}
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <div id="recaptcha-container"></div>
     </div>
   );
-}
+};
 
-export default App;
+export default SignupForm;
